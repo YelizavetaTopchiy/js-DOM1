@@ -1,33 +1,50 @@
 <!DOCTYPE html>
 <html lang="uk">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Калькулятор</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <div class="calculator">
         <h1>Калькулятор</h1>
-        <input type="text" id="number1" placeholder="Перше число">
-        <input type="text" id="number2" placeholder="Друге число">
-        
+        <input type="text" id="numberInput" placeholder="Введіть число" readonly>
+
         <div id="result">Результат: <span id="resultValue">0</span></div>
         <div id="error" class="error-message"></div>
 
         <div class="buttons">
+            <button onclick="addDigit('7')">7</button>
+            <button onclick="addDigit('8')">8</button>
+            <button onclick="addDigit('9')">9</button>
             <button onclick="setOperation('+')">+</button>
-            <button onclick="setOperation('-')">-</button>
-            <button onclick="setOperation('*')">×</button>
-            <button onclick="setOperation('/')">÷</button>
         </div>
 
         <div class="buttons">
-            <button onclick="calculateResult()">=</button> 
+            <button onclick="addDigit('4')">4</button>
+            <button onclick="addDigit('5')">5</button>
+            <button onclick="addDigit('6')">6</button>
+            <button onclick="setOperation('-')">-</button>
+        </div>
+
+        <div class="buttons">
+            <button onclick="addDigit('1')">1</button>
+            <button onclick="addDigit('2')">2</button>
+            <button onclick="addDigit('3')">3</button>
+            <button onclick="setOperation('*')">*</button>
+        </div>
+
+        <div class="buttons">
+            <button onclick="addDigit('0')">0</button>
+            <button onclick="setOperation('/')">÷</button>
+            <button onclick="calculateResult()">=</button>
             <button onclick="resetCalculator()">C</button>
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
+
 </html>

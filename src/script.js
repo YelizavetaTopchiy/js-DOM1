@@ -1,34 +1,49 @@
-let currentOperation = null; 
+let firstNumber = null;
+let currentOperation = null;
+let isSecondNumber = false;
+
+function addDigit(digit) {
+    const input = document.getElementById("numberInput");
+
+    if (isSecondNumber) {
+        input.value += digit;
+    } else {
+        input.value += digit;
+    }
+}
 
 function setOperation(operation) {
+    const input = document.getElementById("numberInput");
+
+    if (firstNumber === null) {
+        firstNumber = parseFloat(input.value);
+    } else if (!isSecondNumber) {
+        calculateResult();
+        firstNumber = parseFloat(document.getElementById("resultValue").textContent);
+    }
+
     currentOperation = operation;
+    input.value = firstNumber + " " + operation + " ";
+    isSecondNumber = true;
 }
 
 function calculateResult() {
-    const number1 = document.getElementById("number1").value.trim();
-    const number2 = document.getElementById("number2").value.trim();
+    const input = document.getElementById("numberInput");
     const resultValue = document.getElementById("resultValue");
     const error = document.getElementById("error");
-
     error.textContent = "";
 
-    if (!currentOperation) {
-        error.textContent = "Оберіть операцію для виконання.";
+    const expression = input.value.split(" ");
+    if (expression.length < 3) {
+        error.textContent = "Будь ласка, введіть число, операцію і друге число.";
         resultValue.textContent = "0";
         return;
     }
 
-    if (number1 === "" || number2 === "") {
-        error.textContent = "Будь ласка, введіть обидва числа.";
-        resultValue.textContent = "0";
-        return;
-    }
-    
-    const num1 = parseFloat(number1);
-    const num2 = parseFloat(number2);
+    const secondNumber = parseFloat(expression[2]);
 
-    if (isNaN(num1) || isNaN(num2)) {
-        error.textContent = "Будь ласка, введіть коректні числа.";
+    if (isNaN(secondNumber) || isNaN(firstNumber)) {
+        error.textContent = "Будь ласка, введіть правильні числа.";
         resultValue.textContent = "0";
         return;
     }
@@ -36,33 +51,38 @@ function calculateResult() {
     let result;
     switch (currentOperation) {
         case '+':
-            result = num1 + num2;
+            result = firstNumber + secondNumber;
             break;
         case '-':
-            result = num1 - num2;
+            result = firstNumber - secondNumber;
             break;
         case '*':
-            result = num1 * num2;
+            result = firstNumber * secondNumber;
             break;
         case '/':
-            if (num2 === 0) {
+            if (secondNumber === 0) {
                 error.textContent = "Ділення на нуль неможливе.";
                 resultValue.textContent = "0";
                 return;
             }
-            result = num1 / num2;
+            result = firstNumber / secondNumber;
             break;
         default:
             return;
     }
 
     resultValue.textContent = Number.isInteger(result) ? result : result.toFixed(2);
+    input.value = resultValue.textContent;
+    firstNumber = parseFloat(result);
+    currentOperation = null;
+    isSecondNumber = false;
 }
 
 function resetCalculator() {
-    document.getElementById("number1").value = "";
-    document.getElementById("number2").value = "";
+    document.getElementById("numberInput").value = "";
     document.getElementById("resultValue").textContent = "0";
     document.getElementById("error").textContent = "";
+    firstNumber = null;
     currentOperation = null;
+    isSecondNumber = false;
 }
